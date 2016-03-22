@@ -28,14 +28,15 @@ end
 post '/users/create' do
   data = params.just(WHITE_USER_PARAMS)
   data[:code] = SecureRandom.uuid
-  {users: [create_user(data)]}
+  create_user(data)
+  get_users({code: data[:code]})
 end
 
 # curl -d "code=d873c798-860c-4293-acc1-ae0f06429c7f&desc=currently lives in Jerusalem" http://okfounder.herokuapp.com/users/update
 post '/users/update' do
   set_data = params.just(WHITE_USER_PARAMS)
-  user = $users.update_one({code: params[:code]},set_data)
-  {users: [user]}
+  $users.update_one({code: params[:code]},"$set" => set_data)
+  get_users({code: params[:code]})
 end
 
 # GET http://okfounder.herokuapp.com/users/xUP4CYOAPg
