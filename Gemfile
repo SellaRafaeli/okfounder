@@ -11,6 +11,7 @@ gem 'activesupport',        '4.0.0' # utility functions like hash.slice
 gem 'require_all'
 gem 'httpclient',           '2.5.2'
 gem 'rest-client', '1.8.0'
+gem "sinatra-cross_origin", "~> 0.3.1"
 #gem 'base62' #allows compression of mongo ids
 
 group :development, :test do
