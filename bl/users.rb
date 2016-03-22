@@ -24,17 +24,18 @@ get '/users/search' do
   get_users(crit)
 end
 
-# POST "name=David" http://okfounder.herokuapp.com/users/create
+# curl -d "name=David" http://okfounder.herokuapp.com/users/create
 post '/users/create' do
   data = params.just(WHITE_USER_PARAMS)
   data[:code] = SecureRandom.uuid
-  create_user(data)
+  {users: [create_user(data)]}
 end
 
 # curl -d "code=d873c798-860c-4293-acc1-ae0f06429c7f&desc=currently lives in Jerusalem" http://okfounder.herokuapp.com/users/update
 post '/users/update' do
   set_data = params.just(WHITE_USER_PARAMS)
-  $users.update_one({code: params[:code]},set_data)
+  user = $users.update_one({code: params[:code]},set_data)
+  {users: [user]}
 end
 
 # GET http://okfounder.herokuapp.com/users/xUP4CYOAPg
