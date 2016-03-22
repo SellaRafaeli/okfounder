@@ -32,7 +32,7 @@ post '/users/create' do
   get_users({code: data[:code]})
 end
 
-# curl -d "code=d873c798-860c-4293-acc1-ae0f06429c7f&desc=currently lives in Jerusalem" http://okfounder.herokuapp.com/users/update
+# curl -d "code=123&desc=loves Jerusalem" http://okfounder.herokuapp.com/users/update
 post '/users/update' do
   set_data = params.just(WHITE_USER_PARAMS)
   $users.update_one({code: params[:code]},"$set" => set_data)
