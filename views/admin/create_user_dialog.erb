@@ -1,4 +1,4 @@
-<form method='post' action='/admin/create_user'>
+<form method='post' action='/users/create'>
 <div id="complete-dialog" class="modal fade" tabindex="-1" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -10,17 +10,17 @@
       <div class="modal-body">
 
       <div class="form-group label-floating is-empty">
-        <label for="555" class="control-label">Patient's case number</label>
-        <input type="text" class="form-control" id="555" name='case_id'>
+        <label for="555" class="control-label">Name</label>
+        <input type="text" class="form-control" id="555" name='name'>
 
         <span class="material-input"></span>
       </div>
           
       <div class="form-group label-floating is-empty">
-        <label for="777" class="control-label">Patient's phone number</label>
-        <input type="text" class="form-control" id="777" name='phone'>
+        <label for="777" class="control-label">Desc</label>
+        <input type="text" class="form-control" id="777" name='desc'>
 
-        <p class="help-block">Enter complete phone number, as in (+972522931234)</p>
+        <p class="help-block">Description</p>
         <span class="material-input"></span>
       </div>
 

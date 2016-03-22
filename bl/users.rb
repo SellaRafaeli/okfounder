@@ -1,44 +1,40 @@
 $users = $mongo.collection('users')
 
-def create_user(data)
-  #data[:username] = data[:email]
+WHITE_USER_PARAMS = [:name,:desc,:age]
+
+def create_user(data)   
   $users.add(data)
 end
 
-# def signin(email)
-#   user = email.present? && $users.get(email: email)
-# end
-
-def user_permalink(user)
-  $root_url + "/#{user['username']}"
+def get_users(crit = {}, opts = {})
+  users = $users.find(crit).limit(10).to_a  
+  {users: users}
 end
 
-def render_user_page(user)
-  full_page_card(:"users/single_user", locals: {user: user})
+get '/users' do
+  crit = {}
+  get_users(crit)
 end
 
-post '/signin' do
-  user = signin(params[:email]) || create_user(email: params[:email])
-  session[:user_id] = user[:_id]
-  redirect '/'
+get '/users/search' do
+  query = params[:query].to_s
+  crit = crit_any_field($users,query)
+  get_users(crit)
 end
 
-get '/enterByCode' do
-  user = $users.get(code: params[:code])
-  if user 
-    session[:user_id] = user[:_id]
-  else 
-    flash.message = 'No patient found with that code.'
-  end
-  
-  redirect back
+post '/users/create' do
+  data = params.just(WHITE_USER_PARAMS)
+  data[:code] = SecureRandom.uuid
+  create_user(data)
 end
 
-get '/logout' do
-  session.clear
-  redirect '/'
+post '/users/update' do
+  set_data = params.just(WHITE_USER_PARAMS)
+  $users.update({code: params[:code]},set_data)
 end
 
-get '/signup' do
-  erb :"users/signup", layout: :layout
+
+# http://localhost:9292/users/HaSlQ6nrvg
+get '/users/:id' do
+  get_users(_id: params[:id])
 end

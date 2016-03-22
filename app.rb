@@ -20,25 +20,10 @@ get '/ping' do
   {msg: '123 pong from SNM', pong: true}
 end
 
-def render_home_page
-  if !cu
-    erb :index, layout: :layout
-  else 
-    erb :"my_er/user", layout: :layout
-  end
+get '/error' do
+  a= b
 end
-
 
 get '/' do
-  #flash.message = "hello this is a flash"
-  render_home_page  
+  erb :index, layout: :layout
 end
-
-# get '/:slug' do
-#   slug = params[:slug]
-#   if user = $users.get(username: slug)
-#     render_user_page(user)
-#   else
-#     halt(404)
-#   end
-# end

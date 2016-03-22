@@ -1,4 +1,4 @@
-$app_name   = 'snm'
+$app_name   = 'okfounder'
 
 $prod       = settings.production? #RACK_ENV==production?
 $prod_url   = 'http://my-er.herokuapp.com/'

@@ -6,22 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/css/lib/bootstrap3.min.css">
   <link rel="stylesheet" href="/css/lib/font-awesome_4.5.0.min.css">
-
-  <%= erb :"layout/material_design" %>  
   
   <link rel="stylesheet" href="/css/main.scss.css">  
 
 </head>
 
-<body style='padding-top: 70px;'>  
+<body>  
   <div class='container-fluid'>        
-    <%= erb :"header/header" %>    
-    <%= erb :"layout/flash" %>            
     <%= yield %>        
-    <%= erb :"footer/footer" %>
   </div>
-    
-    <%= erb :bottom_js_scripts %>
+
+  <%
+
+BOTTOM_JS_SCRIPTS ||= [
+  '/js/lib/jquery-2.2.1.min.js',
+  '/js/lib/bootstrap3.js',
+  '/js/lib/material.min.js',
+  '/js/lib/ripples.min.js',
+  '/js/lib.js',
+  '/js/main.js'
+]
+
+%>
+
+<% BOTTOM_JS_SCRIPTS.each do |path| %>
+  <script src='<%=path%>'></script>
+<% end %>
 </body>
 
 </html>
