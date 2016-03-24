@@ -15,7 +15,7 @@ def get_users(crit = {}, opts = {})
 end
 
 # GET http://okfounder.herokuapp.com/users
-get '/users' do
+get '/users/all' do
   crit = {}
   get_users(crit)
 end
@@ -42,7 +42,7 @@ post '/users/update' do
   get_users({code: params[:code]})
 end
 
-def map_google_doc_fields(google_doc_user)
+def user_fields_hash
   mapping = {
     email: 'contactemailwewillneveremailyouanything',
     name: 'venturename',
@@ -57,7 +57,14 @@ def map_google_doc_fields(google_doc_user)
     salary_or_equity: 'offeringsalaryorequity',
     why_you_details: 'whyshouldwecomeworkforyouincludeasmuchinformationasyoucan1.yourlinkedin2.facebookpage3.website4.thenamesandrolesofthepeoplealreadyinvolved5.anythingelsethatmightconvincepeopletoapproachyouincludingrelevantlinks.thisisyourplacetoshine.'
   }
+end
 
+def user_frontend_fields
+  user_fields_hash.keys
+end 
+
+def map_google_doc_fields(google_doc_user)
+  mapping = user_fields_hash
   normalized_user = {}
   mapping.each do |new_key,old_key| 
     normalized_user[new_key] = google_doc_user[old_key]
@@ -65,7 +72,6 @@ def map_google_doc_fields(google_doc_user)
 
   normalized_user
 end
-
 
 def get_normalized_users
   uri  = USERS_GOOGLE_DOC_URI
@@ -77,11 +83,28 @@ def update_all_users_from_google_doc
   $users.delete_many
   users = get_normalized_users
   users.each do |u| $users.add(u) end 
-  {users: users, count: users.size}
+  {users: users, count: users.size, keys: user_frontend_fields}
 end
 
 get '/users/update_from_google_doc' do
   update_all_users_from_google_doc
+end
+
+def facets_crit
+  fields = user_frontend_fields
+  white_params = params
+  #white_params = params.just(fields)
+  crit   = white_params.map {|k,v| v = Regexp.new(v, Regexp::IGNORECASE); [k,v] }.to_h
+  crit
+end
+
+get '/users/facets_crit' do
+  facets_crit
+end
+
+get '/users/by_facets' do
+  crit = facets_crit   
+  get_users(crit)
 end
 
 # GET http://okfounder.herokuapp.com/users/xUP4CYOAPg

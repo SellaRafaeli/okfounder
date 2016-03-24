@@ -22,6 +22,10 @@ get '/ping' do
   {msg: '123 pong from SNM', pong: true}
 end
 
+post '/ping' do
+  {msg: 'response ping'}
+end
+
 get '/error' do
   a= b
 end
