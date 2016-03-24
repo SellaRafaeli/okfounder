@@ -1,1 +1,0 @@
-$categories = $mongo.collection('categories')
