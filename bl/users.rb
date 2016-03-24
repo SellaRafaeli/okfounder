@@ -10,7 +10,7 @@ def create_user(data)
 end
 
 def get_users(crit = {}, opts = {})
-  users = $users.find(crit).limit(10).to_a  
+  users = $users.find(crit).limit(100).to_a  
   {users: users}
 end
 

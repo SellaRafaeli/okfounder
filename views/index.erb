@@ -1,15 +1,38 @@
 <div class="jumbotron"> 
   <p>Welcome to OkFounder.</p> 
+</div>
 
+<script>
+function userToHTML(user) {
+  return "<div>"+user.name+" --- "+user.email+" </div>"
+}
+
+function refreshUsers(){
+  $.get('/users/all')
+   .success(function(res){
+     var html = res.users.map(function(user){ return userToHTML(user) });
+     $('.usersArea').html(html);
+   });
+}
+
+</script>
+
+<button class='btn btn-lg' onclick='refreshUsers()'>REFRESH</button>
+
+<div class='usersArea'>
+</div>
+
+<footer>
   <p> Sign up at <a href="http://bit.do/sweet_ass_ventures">http://bit.do/sweet_ass_ventures</a>.</p>
 
   <p> View results at <a href="http://bit.do/sweet_ass_ventures_results">http://bit.do/sweet_ass_ventures_results</a>.</p>
 
-  <p> FE at <a href="https://okfounder.firebaseapp.com/#/">https://okfounder.firebaseapp.com/#/</a>
+  <p> FE at <a href="https://okfounder.firebaseapp.com/#/">https://okfounder.firebaseapp.com/#/</a></p>
 
-  <p> Other FE at <a href="http://sellarafaeli.com/okfounder">http://sellarafaeli.com/okfounder</a>
+  <p> Other FE at <a href="http://sellarafaeli.com/okfounder">http://sellarafaeli.com/okfounder</a></p>
 
   <p> API and BL can be found at <a href="https://github.com/SellaRafaeli/okfounder/blob/master/bl/users.rb">https://github.com/SellaRafaeli/okfounder/blob/master/bl/users.rb</a>.</p>
 
   <p> Make sure you also check out the <a href="/admin">admin panel</a>.</p>
-</div>
+</footer>
+
