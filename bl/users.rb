@@ -61,6 +61,10 @@ end
 
 def user_frontend_fields
   user_fields_hash.keys
+end
+
+get '/users/user_frontend_fields' do
+  {fields: user_frontend_fields}
 end 
 
 def map_google_doc_fields(google_doc_user)
@@ -86,6 +90,7 @@ def update_all_users_from_google_doc
   {users: users, count: users.size, keys: user_frontend_fields}
 end
 
+#
 get '/users/update_from_google_doc' do
   update_all_users_from_google_doc
 end
