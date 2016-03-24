@@ -8,7 +8,7 @@ function userToHTML(user) {
 }
 
 function refreshUsers(){
-  $.get('/users/all')
+  $.get('http://okfounder.herokuapp.com/users/all')
    .success(function(res){
      var html = res.users.map(function(user){ return userToHTML(user) });
      $('.usersArea').html(html);
