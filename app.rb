@@ -3,6 +3,8 @@ puts "starting app..."
 require 'bundler'
 require 'active_support/core_ext'
 require 'sinatra/reloader' #dev-only
+require 'json'
+require 'open-uri'
 
 puts "requiring gems..."
 Bundler.require
