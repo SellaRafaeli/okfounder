@@ -102,6 +102,7 @@ get '/users/facets_crit' do
   facets_crit
 end
 
+# GET http://okfounder.herokuapp.com/users/by_facets?name=kar
 get '/users/by_facets' do
   crit = facets_crit   
   get_users(crit)
